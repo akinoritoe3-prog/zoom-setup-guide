@@ -224,18 +224,14 @@
 </head>
 <body class="bg-gray-50 text-gray-800 p-4 md:p-8">
 
-    <!-- 印刷対象のメインエリア -->
     <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-xl overflow-hidden" id="printable-area">
-        <!-- ヘッダー -->
         <div class="bg-zoom p-6 text-white text-center">
             <h1 class="text-2xl md:text-3xl font-bold">遠隔授業 Zoom設定マニュアル（受信校）</h1>
             <p class="mt-2 opacity-90">SHURE P300 システム導入校向け</p>
         </div>
 
-        <!-- コンテンツコンテナ -->
         <div class="p-6 space-y-8 step-container">
             
-            <!-- 手順1 -->
             <section class="step-card pl-4">
                 <h2 class="text-xl font-bold flex items-center mb-4">
                     <span class="bg-zoom text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">1</span>
@@ -254,14 +250,12 @@
                 </div>
             </section>
 
-            <!-- 手順2 (統合版) -->
             <section class="step-card pl-4">
                 <h2 class="text-xl font-bold flex items-center mb-4">
                     <span class="bg-zoom text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">2</span>
                     Zoomアプリの基本設定
                 </h2>
                 
-                <!-- 1⃣ スピーカー・マイクの設定 -->
                 <h3 class="sub-step-title">1⃣ スピーカー・マイクの設定</h3>
                 <p class="text-sm mb-4 italic text-gray-600">Zoomを起動し、右上の「自分のアイコン」→「設定」→「オーディオ」へ。</p>
 
@@ -277,7 +271,6 @@
                             <div class="px-3 py-1 text-xs text-gray-600">ビデオ</div>
                         </div>
                         <div class="mock-content text-sm">
-                            <!-- スピーカー -->
                             <div class="mb-6">
                                 <label class="font-bold block mb-1">スピーカー</label>
                                 <div class="border p-1 bg-gray-50 mb-2 flex justify-between items-center text-[11px]">
@@ -293,7 +286,6 @@
                                 </div>
                             </div>
 
-                            <!-- マイク -->
                             <div class="mb-4">
                                 <label class="font-bold block mb-1">マイク</label>
                                 <div class="border p-1 bg-gray-50 mb-2 flex justify-between items-center text-[11px]">
@@ -316,7 +308,6 @@
                     </div>
                 </div>
 
-                <!-- 2⃣ オリジナルサウンドの設定 (改ページ) -->
                 <div class="page-break"></div>
                 <h3 class="sub-step-title text-blue-800">2⃣ オリジナルサウンドの設定</h3>
                 
@@ -338,13 +329,12 @@
                     </div>
                 </div>
 
-                <!-- 3⃣ 詳細設定（最下部） -->
                 <h3 class="sub-step-title">3⃣ 詳細設定（最下部）</h3>
                 
                 <div class="setting-box grid md:grid-cols-2 gap-4 text-sm">
                     <div class="p-3 bg-white border border-gray-200 rounded">
                         <span class="font-bold text-zoom">エコー除去</span><br>
-                        設定：<span class="font-bold text-red-600">低</span>
+                        設定：<span class="font-bold text-red-600">自動</span>
                     </div>
                     <div class="p-3 bg-white border border-gray-200 rounded">
                         <span class="font-bold text-zoom">Windowsシステムのオーディオ拡張機能</span><br>
@@ -358,7 +348,6 @@
 
             </section>
 
-            <!-- 手順3 -->
             <section class="step-card pl-4">
                 <h2 class="text-xl font-bold flex items-center mb-4">
                     <span class="bg-zoom text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">3</span>
@@ -368,7 +357,6 @@
                 <div class="space-y-4">
                     <div class="setting-box border-yellow-200 bg-yellow-50">
                         <div class="grid grid-cols-2 gap-6 md:gap-10 max-w-lg mx-auto md:mx-0">
-                            <!-- 1. ツマミの設定 -->
                             <div class="flex flex-col items-center">
                                 <div class="text-center bg-white p-2 w-full rounded border border-gray-300 shadow-sm mb-3">
                                     <div class="text-xs text-gray-500 mb-1">P300 / 手元のツマミ</div>
@@ -386,7 +374,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- 2. テレビの設定 -->
                             <div class="flex flex-col items-center">
                                 <div class="text-center bg-white p-2 w-full rounded border border-gray-300 shadow-sm mb-3">
                                     <div class="text-xs text-gray-500 mb-1">教室のテレビ</div>
@@ -411,13 +398,11 @@
             </section>
         </div>
 
-        <!-- フッター -->
         <div class="bg-gray-100 p-4 text-center text-xs text-gray-500 no-print">
             設定が完了したら、必ず配信側と音声チェックを行ってください。
         </div>
     </div>
 
-    <!-- 印刷ボタンエリア -->
     <div class="text-center mt-6 no-print space-y-4">
         <button onclick="printInNewWindow()" class="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 rounded-full shadow-xl transition transform active:scale-95 flex items-center justify-center mx-auto">
             <span class="mr-2">📄</span> 別ウィンドウで開いて印刷
