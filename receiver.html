@@ -10,13 +10,13 @@
         @media print {
             @page {
                 size: A4;
-                margin: 12mm 15mm; /* 上下左右の余白 */
+                margin: 10mm 12mm; /* 上下左右の余白を少し詰める */
             }
             body {
                 background-color: white !important;
                 padding: 0 !important;
                 margin: 0 !important;
-                font-size: 11pt;
+                font-size: 10.5pt; /* 1枚に収まるよう少し小さく */
             }
             .no-print {
                 display: none !important;
@@ -30,34 +30,42 @@
             }
             /* ステップ間の余白調整 */
             .step-container {
-                gap: 20px !important; 
+                gap: 10px !important; 
+                padding: 10px !important;
             }
             .step-card {
                 border-left-width: 6px !important;
                 border-left-color: #0b5cff !important;
                 page-break-inside: avoid;
-                margin-bottom: 20px;
+                margin-bottom: 10px !important;
             }
             /* 強制改ページ */
             .page-break {
                 break-before: page;
                 page-break-before: always;
-                margin-top: 20px !important;
+                margin-top: 10px !important;
                 display: block;
             }
             /* H3の見出し調整 */
             h3.sub-step-title {
-                font-size: 14pt !important;
-                margin-top: 15px !important;
-                margin-bottom: 10px !important;
+                font-size: 12pt !important;
+                margin-top: 10px !important;
+                margin-bottom: 5px !important;
                 color: #000 !important;
             }
+            /* 余白を詰めるための追加クラス調整 */
+            .mb-8 { margin-bottom: 1rem !important; }
+            .mb-6 { margin-bottom: 0.5rem !important; }
+            .mb-4 { margin-bottom: 0.5rem !important; }
+            .p-6 { padding: 1rem !important; }
+            .py-3 { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+            
             * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            h1 { font-size: 18pt !important; }
-            .bg-zoom { padding: 15px !important; }
+            h1 { font-size: 16pt !important; margin: 0 !important; }
+            .bg-zoom { padding: 10px !important; }
         }
 
         .zoom-blue { color: #0b5cff; }
@@ -239,33 +247,62 @@
             <section class="step-card pl-4">
                 <h2 class="text-xl font-bold flex items-center mb-4">
                     <span class="bg-zoom text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">1</span>
-                    事前準備：Yamahaサウンド設定のアンインストール
+                    事前準備
                 </h2>
                 
                 <div class="space-y-4">
-                    <div class="setting-box">
-                        <ol class="list-decimal list-inside text-sm space-y-1 bg-white p-3 rounded border border-gray-200">
-                            <li>PCを起動し、画面下の <strong>Windowsマーク</strong> をクリック</li>
-                            <li>検索欄にキーボードで「<strong>Yamahaサウンド設定</strong>」と入力</li>
-                            <li>見つかったアプリを右クリックして「<strong>アンインストール</strong>」</li>
-                            <li class="font-bold text-red-500">※完了後、必ずPCを「再起動」してください！</li>
-                        </ol>
+                    <!-- 1⃣ Yamahaサウンド設定のアンインストール -->
+                    <div>
+                        <h3 class="font-bold text-blue-900 mb-2">1⃣ Yamahaサウンド設定のアンインストール</h3>
+                        <div class="setting-box py-3">
+                            <ol class="list-decimal list-inside text-sm space-y-1 bg-white p-3 rounded border border-gray-200">
+                                <li>接続用PCを起動し、画面下の <strong>Windowsマーク</strong> をクリック</li>
+                                <li>検索欄にキーボードで「<strong>Yamahaサウンド設定</strong>」と入力</li>
+                                <li>見つかったアプリを右クリックして「<strong>アンインストール</strong>」</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- 2⃣ Zoomアプリのインストール -->
+                    <div>
+                        <h3 class="font-bold text-blue-900 mb-2">2⃣ Zoomアプリのインストール</h3>
+                        <div class="setting-box py-3">
+                            <ol class="list-decimal list-inside text-sm space-y-2 bg-white p-3 rounded border border-gray-200">
+                                <li>接続用PCからZoomダウンロードセンターにアクセスする。<br>
+                                    <a href="https://zoom.us/ja/download" target="_blank" class="text-blue-600 underline ml-5 break-all">（URL：https://zoom.us/ja/download）</a>
+                                </li>
+                                <li>「<strong>ダウンロード64-bit</strong>」をクリックしてダウンロードし、インストールする。</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- 3⃣ 再起動 -->
+                    <div>
+                        <h3 class="font-bold text-blue-900 mb-2">3⃣ 再起動</h3>
+                        <div class="setting-box py-3 border-red-200 bg-red-50">
+                            <p class="text-sm font-bold text-red-600 text-center">
+                                上記2つを完了後、必ずPCの「再起動」を行ってください。
+                            </p>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 手順2 (統合版) -->
+            <!-- 手順2 -->
             <section class="step-card pl-4">
                 <h2 class="text-xl font-bold flex items-center mb-4">
                     <span class="bg-zoom text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">2</span>
                     Zoomアプリの基本設定
                 </h2>
                 
-                <!-- 1⃣ スピーカー・マイクの設定 -->
-                <h3 class="sub-step-title">1⃣ スピーカー・マイクの設定</h3>
-                <p class="text-sm mb-4 italic text-gray-600">Zoomを起動し、右上の「自分のアイコン」→「設定」→「オーディオ」へ。</p>
+                <!-- 1⃣ ログイン -->
+                <h3 class="sub-step-title">1⃣ Zoomアプリを起動し、googleでログインする。</h3>
+                
+                <!-- 2⃣ スピーカー・マイクの設定 -->
+                <h3 class="sub-step-title mt-6">2⃣ スピーカー・マイクの設定</h3>
+                <p class="text-sm mb-4 italic text-gray-600">右上の「自分のアイコン」→「設定」→「オーディオ」へ。</p>
 
-                <div class="mock-ui flex flex-col min-h-[300px] mb-8">
+                <div class="mock-ui flex flex-col mb-8">
                     <div class="mock-header">
                         <span class="font-bold text-sm">設定</span>
                         <span class="text-gray-400">×</span>
@@ -316,9 +353,9 @@
                     </div>
                 </div>
 
-                <!-- 2⃣ オリジナルサウンドの設定 (改ページ) -->
+                <!-- 3⃣ オリジナルサウンドの設定 (改ページ) -->
                 <div class="page-break"></div>
-                <h3 class="sub-step-title text-blue-800">2⃣ オリジナルサウンドの設定</h3>
+                <h3 class="sub-step-title text-blue-800">3⃣ オリジナルサウンドの設定</h3>
                 
                 <div class="bg-blue-50 p-4 border border-blue-200 rounded-lg mb-8">
                     <p class="font-bold mb-3">「マイクモード」を以下のように設定します</p>
@@ -338,8 +375,8 @@
                     </div>
                 </div>
 
-                <!-- 3⃣ 詳細設定（最下部） -->
-                <h3 class="sub-step-title">3⃣ 詳細設定（最下部）</h3>
+                <!-- ⓸ 詳細設定（最下部） -->
+                <h3 class="sub-step-title">⓸ 詳細設定（最下部）</h3>
                 
                 <div class="setting-box grid md:grid-cols-2 gap-4 text-sm">
                     <div class="p-3 bg-white border border-gray-200 rounded">
@@ -443,7 +480,7 @@
                         body { background: white !important; padding: 0 !important; margin: 0 !important; }
                         #printable-area { width: 100% !important; max-width: none !important; box-shadow: none !important; margin: 0 !important; border: none !important; }
                         .no-print { display: none !important; }
-                        @page { size: A4; margin: 12mm 15mm; }
+                        @page { size: A4; margin: 10mm 12mm; }
                     </style>
                 </head>
                 <body onload="setTimeout(function(){ window.print(); }, 500);">
@@ -459,4 +496,3 @@
 
 </body>
 </html>
-
