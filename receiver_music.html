@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>遠隔授業 Zoom設定マニュアル（受信側・音楽機材あり）</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 印刷時の挙動を強制するスタイル */
+        @media print {
+            @page {
+                size: A4;
+                margin: 10mm 12mm; /* 上下左右の余白を少し詰める */
+            }
+            body {
+                background-color: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                font-size: 10.5pt; /* 1枚に収まるよう少し小さく */
+            }
+            .no-print {
+                display: none !important;
+            }
+            #printable-area {
+                width: 100% !important;
+                max-width: none !important;
+                box-shadow: none !important;
+                margin: 0 !important;
+                border: none !important;
+            }
+            /* ステップ間の余白調整 */
+            .step-container {
+                gap: 10px !important; 
+                padding: 10px !important;
+            }
+            .step-card {
+                border-left-width: 6px !important;
+                border-left-color: #0b5cff !important;
+                page-break-inside: avoid;
+                margin-bottom: 10px !important;
+            }
+            /* 強制改ページ */
+            .page-break {
+                break-before: page;
+                page-break-before: always;
+                margin-top: 10px !important;
+                display: block;
+            }
+            /* H3の見出し調整 */
+            h3.sub-step-title {
+                font-size: 12pt !important;
+                margin-top: 10px !important;
+                margin-bottom: 5px !important;
+                color: #000 !important;
+            }
+            /* 余白を詰めるための追加クラス調整 */
+            .mb-8 { margin-bottom: 1rem !important; }
+            .mb-6 { margin-bottom: 0.5rem !important; }
+            .mb-4 { margin-bottom: 0.5rem !important; }
+            .p-6 { padding: 1rem !important; }
+            .py-3 { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+            
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            h1 { font-size: 16pt !important; margin: 0 !important; }
+            .bg-zoom { padding: 10px !important; }
+        }
+
+        .zoom-blue { color: #0b5cff; }
+        .bg-zoom { background-color: #0b5cff; }
+        .step-card { border-left: 4px solid #0b5cff; }
+        .setting-box { border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; background-color: #f8fafc; }
+        .mock-ui { font-family: 'Segoe UI', sans-serif; border: 1px solid #ccc; border-radius: 4px; overflow: hidden; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+        .mock-header { background: #fff; padding: 8px 12px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; }
+        .mock-sidebar { background: #f4f4f4; width: 120px; border-right: 1px solid #ddd; padding: 10px 0; }
+        .mock-content { background: #fff; padding: 20px; flex-grow: 1; }
+        .checkbox-item { display: flex; align-items: center; margin-bottom: 8px; font-size: 0.9rem; }
+        .checkbox { width: 16px; height: 16px; border: 1px solid #777; margin-right: 8px; display: inline-block; position: relative; }
+        .checkbox.checked::after { content: '✔'; position: absolute; top: -4px; left: 1px; color: #0b5cff; font-size: 14px; }
+
+        /* ツマミのCSSイラスト */
+        .knob-container {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            margin: 0 auto;
+        }
+        .knob-text {
+            color: #ccc;
+            font-size: 8px;
+            position: absolute;
+            font-family: sans-serif;
+        }
+        .knob-min { bottom: 6px; left: 10px; }
+        .knob-max { bottom: 6px; right: 10px; }
+        .knob-dial {
+            width: 45px;
+            height: 45px;
+            background: #111;
+            border-radius: 50%;
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.6), inset 0 1px 2px rgba(255,255,255,0.1);
+            border: 1px solid #000;
+        }
+        .knob-dial::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 16px; height: 16px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #222, #000);
+            box-shadow: inset 1px 1px 2px rgba(0,0,0,0.8);
+        }
+        .knob-indicator-wrapper {
+            width: 100%; height: 100%;
+            position: absolute;
+            top: 0; left: 0;
+            border-radius: 50%;
+            transform: rotate(90deg); /* 3時方向 */
+        }
+        .knob-indicator {
+            width: 4px; height: 4px;
+            background: #444;
+            border-radius: 50%;
+            position: absolute;
+            top: 5px; left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 2px rgba(0,0,0,0.5);
+        }
+        .knob-scale {
+            width: 65px; height: 65px;
+            position: absolute;
+            top: 55%; left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px dashed #555;
+            border-radius: 50%;
+            border-bottom-color: transparent;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        /* スピーカーのCSSイラスト */
+        .speaker-box {
+            width: 80px;
+            height: 110px;
+            background: linear-gradient(145deg, #333, #222);
+            border-radius: 6px;
+            position: relative;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            margin: 0 auto;
+            border: 3px solid #111;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+        .speaker-cone-small {
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, #222, #000);
+            border-radius: 50%;
+            border: 2px solid #444;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+        }
+        .speaker-cone-large {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, #222, #000);
+            border-radius: 50%;
+            border: 2px solid #444;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        /* サブステップの見出し */
+        .sub-step-title {
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: #1e3a8a; /* blue-900 */
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 p-4 md:p-8">
+
+    <!-- 印刷対象のメインエリア -->
+    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-xl overflow-hidden" id="printable-area">
+        <!-- ヘッダー -->
+        <div class="bg-zoom p-6 text-white text-center">
+            <h1 class="text-2xl md:text-3xl font-bold">遠隔授業 Zoom設定マニュアル（受信側）</h1>
+            <p class="mt-2 opacity-90 font-bold">SHURE P300システム＋音楽機材導入校向け（常呂・豊富・南茅部・利尻）</p>
+        </div>
+
+        <!-- コンテンツコンテナ -->
+        <div class="p-6 space-y-8 step-container">
+            
+            <!-- 手順1 -->
+            <section class="step-card pl-4">
+                <h2 class="text-xl font-bold flex items-center mb-4">
+                    <span class="bg-zoom text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">1</span>
+                    事前準備
+                </h2>
+                
+                <div class="space-y-4">
+                    <!-- 1⃣ Yamahaサウンド設定のアンインストール -->
+                    <div>
+                        <h3 class="font-bold text-blue-900 mb-2">1⃣ Yamahaサウンド設定のアンインストール</h3>
+                        <div class="setting-box py-3">
+                            <ol class="list-decimal list-inside text-sm space-y-1 bg-white p-3 rounded border border-gray-200">
+                                <li>接続用PCを起動し、画面下の <strong>Windowsマーク</strong> をクリック</li>
+                                <li>検索欄にキーボードで「<strong>Yamahaサウンド設定</strong>」と入力</li>
+                                <li>見つかったアプリを右クリックして「<strong>アンインストール</strong>」</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- 2⃣ Zoomアプリのインストール -->
+                    <div>
+                        <h3 class="font-bold text-blue-900 mb-2">2⃣ Zoomアプリのインストール</h3>
+                        <div class="setting-box py-3">
+                            <ol class="list-decimal list-inside text-sm space-y-2 bg-white p-3 rounded border border-gray-200">
+                                <li>接続用PCからZoomダウンロードセンターにアクセスする。<br>
+                                    <a href="https://zoom.us/ja/download" target="_blank" class="text-blue-600 underline ml-5 break-all">（URL：https://zoom.us/ja/download）</a>
+                                </li>
+                                <li>「<strong>ダウンロード64-bit</strong>」をクリックしてダウンロードし、インストールする。</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- 3⃣ 再起動 -->
+                    <div>
+                        <h3 class="font-bold text-blue-900 mb-2">3⃣ 再起動</h3>
+                        <div class="setting-box py-3 border-red-200 bg-red-50">
+                            <p class="text-sm font-bold text-red-600 text-center">
+                                上記2つを完了後、必ずPCの「再起動」を行ってください。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 手順2 -->
+            <section class="step-card pl-4">
+                <h2 class="text-xl font-bold flex items-center mb-4">
+                    <span class="bg-zoom text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">2</span>
+                    Zoomアプリの基本設定
+                </h2>
+                
+                <!-- 1⃣ ログイン -->
+                <h3 class="sub-step-title">1⃣ Zoomアプリを起動し、googleでログインする。</h3>
+                
+                <!-- 2⃣ スピーカー・マイクの設定 -->
+                <h3 class="sub-step-title mt-6">2⃣ スピーカー・マイクの設定</h3>
+                <p class="text-sm mb-4 italic text-gray-600">右上の「自分のアイコン」→「設定」→「オーディオ」へ。</p>
+
+                <div class="mock-ui flex flex-col mb-8">
+                    <div class="mock-header">
+                        <span class="font-bold text-sm">設定</span>
+                        <span class="text-gray-400">×</span>
+                    </div>
+                    <div class="flex flex-1">
+                        <div class="mock-sidebar">
+                            <div class="px-3 py-1 text-xs text-gray-400">一般</div>
+                            <div class="px-3 py-1 text-xs bg-blue-100 text-blue-700 font-bold border-r-2 border-blue-700">オーディオ</div>
+                            <div class="px-3 py-1 text-xs text-gray-600">ビデオ</div>
+                        </div>
+                        <div class="mock-content text-sm">
+                            <!-- スピーカー -->
+                            <div class="mb-6">
+                                <label class="font-bold block mb-1 text-blue-800">スピーカー</label>
+                                <div class="border p-1 bg-yellow-50 border-yellow-300 mb-2 flex justify-between items-center text-[11px] font-bold">
+                                    <span>ヘッドホン</span>
+                                    <span>▼</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[9px]">音量</span>
+                                    <div class="h-1 bg-blue-600 flex-grow relative">
+                                        <div class="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white border border-gray-400 rounded-full"></div>
+                                    </div>
+                                    <span class="text-[9px] font-bold italic">MAX!</span>
+                                </div>
+                            </div>
+
+                            <!-- マイク -->
+                            <div class="mb-4">
+                                <label class="font-bold block mb-1">マイク</label>
+                                <div class="border p-1 bg-gray-50 mb-2 flex justify-between items-center text-[11px]">
+                                    <span>P300 (SHURE)</span>
+                                    <span>▼</span>
+                                </div>
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="text-[9px]">音量</span>
+                                    <div class="h-1 bg-blue-600 flex-grow relative">
+                                        <div class="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white border border-gray-400 rounded-full"></div>
+                                    </div>
+                                    <span class="text-[9px] font-bold italic">MAX!</span>
+                                </div>
+                                <div class="checkbox-item">
+                                    <div class="checkbox"></div>
+                                    <span>マイク音量を自動調節する <span class="text-red-600 font-bold">←オフ！</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3⃣ オリジナルサウンドの設定 (改ページ) -->
+                <div class="page-break"></div>
+                <h3 class="sub-step-title text-blue-800">3⃣ オリジナルサウンドの設定</h3>
+                
+                <div class="bg-blue-50 p-4 border border-blue-200 rounded-lg mb-8">
+                    <p class="font-bold mb-3">「マイクモード」を以下のように設定します</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-2 font-bold p-2 bg-white rounded border border-blue-400 shadow-sm">
+                            <div class="checkbox checked"></div>
+                            <span>ミュージシャン用のオリジナルサウンド</span>
+                        </div>
+
+                        <div class="ml-6 space-y-2">
+                            <p class="text-xs text-red-600 font-bold mb-1">※「エコー除去」のみ空欄（チェックなし）にする</p>
+                            <div class="checkbox-item font-bold text-blue-800"><div class="checkbox checked"></div> 高忠実度音楽モード</div>
+                            <div class="checkbox-item"><div class="checkbox"></div> エコー除去</div>
+                            <div class="checkbox-item font-bold text-blue-800"><div class="checkbox checked"></div> ステレオオーディオ</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ⓸ 詳細設定（最下部） -->
+                <h3 class="sub-step-title">⓸ 詳細設定（最下部）</h3>
+                
+                <div class="setting-box grid md:grid-cols-2 gap-4 text-sm">
+                    <div class="p-3 bg-white border border-gray-200 rounded">
+                        <span class="font-bold text-zoom">エコー除去</span><br>
+                        設定：<span class="font-bold text-red-600">自動</span>
+                    </div>
+                    <div class="p-3 bg-white border border-gray-200 rounded">
+                        <span class="font-bold text-zoom">Windowsシステムのオーディオ拡張機能</span><br>
+                        設定：<span class="font-bold text-red-600">オフ</span>
+                    </div>
+                    <div class="p-3 bg-white border border-gray-200 rounded col-span-full">
+                        <span class="font-bold text-zoom">Windowsオーディオデバイスドライバーによるシグナル処理</span><br>
+                        設定：<span class="font-bold text-red-600">オフ</span>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- 手順3 -->
+            <section class="step-card pl-4">
+                <h2 class="text-xl font-bold flex items-center mb-4">
+                    <span class="bg-zoom text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">3</span>
+                    外部機材の物理設定
+                </h2>
+                
+                <div class="space-y-4">
+                    <div class="setting-box border-yellow-200 bg-yellow-50">
+                        <div class="grid grid-cols-2 gap-6 md:gap-10 max-w-lg mx-auto md:mx-0">
+                            <!-- 1. ツマミの設定 -->
+                            <div class="flex flex-col items-center">
+                                <div class="text-center bg-white p-2 w-full rounded border border-gray-300 shadow-sm mb-3">
+                                    <div class="text-xs text-gray-500 mb-1">P300 / 手元のツマミ</div>
+                                    <div class="text-blue-700 font-bold text-lg">3時 の方向</div>
+                                </div>
+                                <div class="knob-container">
+                                    <div class="knob-text" style="top: 8px; right: 8px; font-weight: bold;">FOSTEX</div>
+                                    <div class="knob-text knob-min">min</div>
+                                    <div class="knob-text knob-max">max</div>
+                                    <div class="knob-scale"></div>
+                                    <div class="knob-dial">
+                                        <div class="knob-indicator-wrapper">
+                                            <div class="knob-indicator"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 2. スピーカーの設定 -->
+                            <div class="flex flex-col items-center">
+                                <div class="text-center bg-white p-2 w-full rounded border border-gray-300 shadow-sm mb-3">
+                                    <div class="text-xs text-gray-500 mb-1">スピーカーのツマミ</div>
+                                    <div class="text-blue-700 font-bold text-lg">適量に調整</div>
+                                </div>
+                                <div class="speaker-box">
+                                    <div class="speaker-cone-small"></div>
+                                    <div class="speaker-cone-large"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- フッター -->
+        <div class="bg-gray-100 p-4 text-center text-xs text-gray-500 no-print">
+            設定が完了したら、必ず配信側と音声チェックを行ってください。
+        </div>
+    </div>
+
+    <!-- 印刷ボタンエリア -->
+    <div class="text-center mt-6 no-print space-y-4">
+        <button onclick="printInNewWindow()" class="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 rounded-full shadow-xl transition transform active:scale-95 flex items-center justify-center mx-auto">
+            <span class="mr-2">📄</span> 別ウィンドウで開いて印刷
+        </button>
+        <div class="text-xs text-gray-600 bg-white p-4 rounded-lg border border-gray-200 inline-block max-w-sm">
+            <p class="font-bold text-blue-600">【重要】印刷設定について</p>
+            <p>印刷ダイアログで「両面印刷（短辺とじ）」などを選択すると、1枚の紙の裏表に印刷できます。</p>
+        </div>
+    </div>
+
+    <script>
+        function printInNewWindow() {
+            const content = document.getElementById('printable-area').outerHTML;
+            const head = document.head.innerHTML;
+            const printWin = window.open('', '_blank');
+            printWin.document.open();
+            printWin.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    ${head}
+                    <style>
+                        body { background: white !important; padding: 0 !important; margin: 0 !important; }
+                        #printable-area { width: 100% !important; max-width: none !important; box-shadow: none !important; margin: 0 !important; border: none !important; }
+                        .no-print { display: none !important; }
+                        @page { size: A4; margin: 10mm 12mm; }
+                    </style>
+                </head>
+                <body onload="setTimeout(function(){ window.print(); }, 500);">
+                    <div class="p-4">
+                        ${content}
+                    </div>
+                </body>
+                </html>
+            `);
+            printWin.document.close();
+        }
+    </script>
+
+</body>
+</html>
