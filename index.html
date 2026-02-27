@@ -3,51 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>遠隔授業 Zoom設定マニュアル</title>
+    <title>遠隔授業 Zoom設定マニュアル メニュー</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; }
+    </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-4 font-sans">
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
 
-    <div class="max-w-4xl w-full bg-white rounded-2xl shadow-xl overflow-hidden">
-        <!-- ヘッダー -->
-        <div class="bg-slate-800 p-8 text-center text-white">
-            <h1 class="text-2xl md:text-3xl font-bold mb-2">遠隔授業 Zoom設定マニュアル</h1>
-            <p class="text-slate-300 text-sm">対象のマニュアルを選択してください</p>
-        </div>
-
-        <!-- 選択ボタンエリア -->
-        <div class="p-8 md:p-12 grid md:grid-cols-2 gap-6 md:gap-10">
-            
-            <!-- 受信側ボタン -->
-            <a href="receiver.html" class="group relative block p-8 border-2 border-blue-100 rounded-2xl hover:border-blue-500 hover:shadow-2xl transition-all duration-300 bg-blue-50 hover:bg-white text-center">
-                <div class="w-20 h-20 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-6 text-3xl shadow-lg group-hover:scale-110 transition-transform">
-                    🏫
-                </div>
-                <h2 class="text-2xl font-bold text-blue-900 mb-2">受信側</h2>
-                <p class="text-sm text-blue-700 font-bold mb-1">（高校・教室向け）</p>
-                <p class="text-xs text-gray-500 mb-6">SHURE P300システム導入校<br>A4両面印刷用</p>
-                <span class="inline-block bg-blue-600 text-white text-sm font-bold py-3 px-8 rounded-full shadow hover:bg-blue-700 transition-colors">
-                    マニュアルを開く
-                </span>
-            </a>
-
-            <!-- 配信側ボタン -->
-            <a href="host.html" class="group relative block p-8 border-2 border-green-100 rounded-2xl hover:border-green-500 hover:shadow-2xl transition-all duration-300 bg-green-50 hover:bg-white text-center">
-                <div class="w-20 h-20 bg-green-600 text-white rounded-full flex items-center justify-center mx-auto mb-6 text-3xl shadow-lg group-hover:scale-110 transition-transform">
-                    💻
-                </div>
-                <h2 class="text-2xl font-bold text-green-900 mb-2">配信側</h2>
-                <p class="text-sm text-green-700 font-bold mb-1">（先生・PC操作用）</p>
-                <p class="text-xs text-gray-500 mb-6">A4片面印刷用</p>
-                <span class="inline-block bg-green-600 text-white text-sm font-bold py-3 px-8 rounded-full shadow hover:bg-green-700 transition-colors">
-                    マニュアルを開く
-                </span>
-            </a>
-
-        </div>
+    <div class="max-w-2xl w-full bg-white rounded-2xl shadow-xl overflow-hidden">
         
-        <div class="bg-gray-50 p-4 text-center text-xs text-gray-400">
-            推奨環境: Google Chrome / Microsoft Edge
+        <!-- ヘッダー -->
+        <div class="bg-blue-600 p-6 text-white text-center">
+            <h1 class="text-2xl md:text-3xl font-bold">遠隔授業 Zoom設定マニュアル</h1>
+            <p class="mt-2 text-blue-100 text-sm">確認したいマニュアルを選択してください</p>
+        </div>
+
+        <!-- メニューボタン群 -->
+        <div class="p-6 md:p-8 space-y-5">
+
+            <!-- 配信側（もしあれば） -->
+            <a href="sender.html" class="group block w-full p-5 border-2 border-green-500 rounded-xl hover:bg-green-50 transition duration-200 shadow-sm hover:shadow">
+                <div class="flex items-center">
+                    <div class="bg-green-100 text-green-600 rounded-full p-3 mr-4">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-green-700 group-hover:text-green-800">配信側の設定マニュアル</h2>
+                        <p class="text-sm text-gray-500 mt-1">授業を配信する学校（先生側）向けの設定です。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 受信側（通常版） -->
+            <a href="receiver.html" class="group block w-full p-5 border-2 border-blue-500 rounded-xl hover:bg-blue-50 transition duration-200 shadow-sm hover:shadow">
+                <div class="flex items-center">
+                    <div class="bg-blue-100 text-blue-600 rounded-full p-3 mr-4">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-blue-700 group-hover:text-blue-800">受信側の設定マニュアル（通常版）</h2>
+                        <p class="text-sm text-gray-500 mt-1">SHURE P300 システム導入校向けの設定です。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 受信側（音楽機材あり） -->
+            <a href="receiver_music.html" class="group block w-full p-5 border-2 border-purple-500 rounded-xl hover:bg-purple-50 transition duration-200 shadow-sm hover:shadow">
+                <div class="flex items-center">
+                    <div class="bg-purple-100 text-purple-600 rounded-full p-3 mr-4">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-purple-700 group-hover:text-purple-800">受信側の設定マニュアル（音楽機材あり）</h2>
+                        <p class="text-sm text-gray-500 mt-1">常呂・豊富・南茅部・利尻 向けの設定です。</p>
+                    </div>
+                </div>
+            </a>
+
         </div>
     </div>
 
